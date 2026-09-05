@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://docs.apphaven.eu/schemas/apphaven.schema.json
+version: 1
+
+services:
+  web:
+    type: container
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - 8080
+    env:
+      SERVER_PORT: "8080"
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${service.db.host}:${service.db.port}/${service.db.database}
+      SPRING_DATASOURCE_USERNAME: ${service.db.user}
+      SPRING_DATASOURCE_PASSWORD: ${service.db.password}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8080/healthz || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 15s
+    depends_on:
+      - service: db
+        condition: healthy
+
+  db:
+    type: postgres
+    version: "17"
