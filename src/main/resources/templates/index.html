@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spring Boot Todo | AppHaven</title>
+  <link rel="stylesheet" th:href="@{/style.css}" href="/style.css">
+</head>
+<body>
+<main>
+  <h1>Spring Boot Todo</h1>
+  <p>A shared task list, built with Spring Boot and PostgreSQL.</p>
+
+  <form class="add" method="post" action="/add" th:action="@{/add}">
+    <input type="text" name="title" aria-label="New task" placeholder="What needs doing?"
+           maxlength="200" autocomplete="off" autofocus required>
+    <button type="submit">Add</button>
+  </form>
+
+  <p class="empty" th:if="${todos.isEmpty()}">No items yet.</p>
+
+  <ul th:unless="${todos.isEmpty()}">
+    <li th:each="todo : ${todos}">
+      <span th:text="${todo.title}">A task</span>
+      <form method="post" action="/delete" th:action="@{/delete}">
+        <input type="hidden" name="id" th:value="${todo.id}">
+        <button type="submit">Delete</button>
+      </form>
+    </li>
+  </ul>
+
+  <footer>
+    <p>Deploy your own on <a href="https://apphaven.eu">AppHaven</a> ·
+      <a href="https://github.com/apphaven-eu/example-java">Source code</a> ·
+      <a href="https://docs.apphaven.eu/getting-started">Deployment guide</a></p>
+  </footer>
+</main>
+</body>
+</html>

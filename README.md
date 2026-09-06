@@ -7,7 +7,10 @@ The repository includes the application, a `Dockerfile`, and an `apphaven.yaml` 
 
 ## Stack
 
-- Java 21, Spring Boot 3.5.16 (spring-boot-starter-web, spring-boot-starter-jdbc)
+- Java 21, Spring Boot 3.5.16 (spring-boot-starter-web, spring-boot-starter-jdbc,
+  spring-boot-starter-thymeleaf)
+- Thymeleaf view at `src/main/resources/templates/index.html`, which escapes values by
+  default; stylesheet served as a static resource from `src/main/resources/static/style.css`
 - PostgreSQL driver `org.postgresql:postgresql`, queries through `JdbcClient`
 - PostgreSQL 17
 - Build with Maven 3.9 in `maven:3.9-eclipse-temurin-21`, runtime image `eclipse-temurin:21-jre-alpine`
